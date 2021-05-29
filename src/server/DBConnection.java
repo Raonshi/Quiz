@@ -16,13 +16,11 @@ public class DBConnection {
         this.user_name = user_name;
         this.password = password;
 
-        //드라이버 로딩
         LoadDriver();
-
-        //드라이버 연결
         ConnectDriver();
     }
 
+    //JDBC 드라이버를 로드한다.
     void LoadDriver(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -33,6 +31,7 @@ public class DBConnection {
         }
     }
 
+    //로드된 드라이버를 통해 DB에 연결한다.
     void ConnectDriver(){
         try{
             connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false", user_name, password);
@@ -45,7 +44,7 @@ public class DBConnection {
     }
 
 
-    //드라이버 연결 해제시 호출
+    //드라이버의 연결을 해제하려는 경우 호출
     public void DisconnectDriver(){
         try{
             if(connection != null){
@@ -80,5 +79,37 @@ public class DBConnection {
 
             System.out.println(no + "|" + id + "|" + pw + "|" + role);
         }
+    }
+
+    //회원가입 정보를 DB에 저장
+    public void InsertAccountInfo(String id, String pw, String role) throws Exception{
+        //현재 가입된 회원 수를 조회한다.
+        String searchSQL = "SELECT * FROM quiz.account";
+        //쿼리 객체 생성 -> 커서 위치를 이동 시킬 수 있도록 파라미터 값을 넣어준다.
+        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet resultSet = statement.executeQuery(searchSQL);
+        //커서 이동
+        resultSet.last();
+        int no = resultSet.getRow() + 1;
+
+        //SQL문장을 정의
+        String SQL = "INSERT INTO quiz.account(account_no, account_id, account_password, account_role)"
+                + "values('"+no+"', '"+id+"', '"+pw+"', '"+role+"');";
+
+        //쿼리 객체 생성
+        Statement stmt = connection.createStatement();
+        //ResultSet result = null;
+        stmt.executeUpdate(SQL);
+    }
+
+    //회원 정보를 DB에서 삭제
+    public void DeleteAccountInfo(int no) throws Exception{
+        //SQL문장을 정의
+        String SQL = "DELETE FROM quiz.account WHERE account_no="+no+";";
+
+        //쿼리 객체 생성
+        Statement stmt = connection.createStatement();
+        //ResultSet result = null;
+        stmt.executeUpdate(SQL);
     }
 }
