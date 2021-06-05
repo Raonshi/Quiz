@@ -31,8 +31,7 @@ class MyFrame extends JFrame{
     private JLabel idLabel, pwLabel, logLabel;
     private JButton loginBtn, registerBtn;
     private JButton tableRefreshBtn;
-    private JButton createQuizBtn, deleteQuizBtn, manageQuizBtn;
-    private JList quizList, userList;
+    private JButton joinQuizBtn, manageQuizBtn;
     private JScrollPane scrollPane;
     private JTable userTable;
 
@@ -42,7 +41,7 @@ class MyFrame extends JFrame{
     String columns[] = {"No.", "ID", "PW", "Role"};
 
     public MyFrame(){
-        super.setTitle("퀴즈 프로그램(관리자용)");
+        super.setTitle("퀴즈 프로그램");
         super.setSize(new Dimension(1100, 700));
         setLocationRelativeTo(null);
 
@@ -77,6 +76,11 @@ class MyFrame extends JFrame{
                             isLogin = true;
                             loginBtn.setText("로그아웃");
                             registerBtn.setVisible(false);
+                            if(role == 100){
+                                manageQuizBtn.setVisible(true);
+                            }else{
+                                manageQuizBtn.setVisible(false);
+                            }
 
                             logLabel.setText(id.getText() + "님, 환영합니다!");
                             break;
@@ -92,9 +96,7 @@ class MyFrame extends JFrame{
                 else{
                     loginBtn.setText("로그인");
                     registerBtn.setVisible(true);
-
                     tap.setSelectedIndex(0);
-
                     isLogin = false;
                 }
 
@@ -123,11 +125,28 @@ class MyFrame extends JFrame{
 
 
         //퀴즈 패널 영역
-        quizPanel = new JPanel();
+        quizPanel = new JPanel(new FlowLayout());
         quizPanel.setPreferredSize(new Dimension(1000, 600));
-        quizPanel.setBackground(Color.RED);
 
+        joinQuizBtn = new JButton("퀴즈 참가");
+        joinQuizBtn.setPreferredSize(new Dimension(200, 100));
+        joinQuizBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new QuizJoin();
+            }
+        });
+        quizPanel.add(joinQuizBtn);
 
+        manageQuizBtn = new JButton("퀴즈 관리");
+        manageQuizBtn.setPreferredSize(new Dimension(200, 100));
+        manageQuizBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new QuizManage();
+            }
+        });
+        quizPanel.add(manageQuizBtn);
 
         add(quizPanel, BorderLayout.CENTER);
         //퀴즈 패널 영역 끝
