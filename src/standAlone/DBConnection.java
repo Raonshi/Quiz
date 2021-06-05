@@ -1,4 +1,4 @@
-package server;
+package standAlone;
 
 import java.sql.*;
 
@@ -59,9 +59,9 @@ public class DBConnection {
     }
 
     //테이블 조회
-    public void SearchTable(String tableName) throws Exception{
-        //SQL문장 정의
-        String SQL = "SELECT * FROM " + tableName;
+    public ResultSet SearchTable(String SQL) throws SQLException{
+        //테스트용 SQL문장 정의
+        //String testSQL = "SELECT * FROM " + tableName;
 
         //쿼리를 보낼 객체와 쿼리 결과를 저장하는 객체 생성
         Statement stmt = connection.createStatement();
@@ -69,37 +69,34 @@ public class DBConnection {
 
         //SQL문장 실행
         result = stmt.executeQuery(SQL);
-
-        //출력 부분
-        while(result.next()){
-            String no = result.getString("account_no");
-            String id = result.getString("account_id");
-            String pw = result.getString("account_password");
-            String role = result.getString("account_role");
-
-            System.out.println(no + "|" + id + "|" + pw + "|" + role);
-        }
+        return result;
     }
 
     //회원가입 정보를 DB에 저장
-    public void InsertAccountInfo(String id, String pw, String role) throws Exception{
-        //현재 가입된 회원 수를 조회한다.
-        String searchSQL = "SELECT * FROM quiz.account";
-        //쿼리 객체 생성 -> 커서 위치를 이동 시킬 수 있도록 파라미터 값을 넣어준다.
-        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet resultSet = statement.executeQuery(searchSQL);
-        //커서 이동
-        resultSet.last();
-        int no = resultSet.getRow() + 1;
+    public void InsertAccountInfo(String id, String pw, String role){
+        try{
+            //현재 가입된 회원 수를 조회한다.
+            String searchSQL = "SELECT * FROM quiz.account";
+            //쿼리 객체 생성 -> 커서 위치를 이동 시킬 수 있도록 파라미터 값을 넣어준다.
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet resultSet = statement.executeQuery(searchSQL);
+            //커서 이동
+            resultSet.last();
+            int no = resultSet.getRow() + 1;
 
-        //SQL문장을 정의
-        String SQL = "INSERT INTO quiz.account(account_no, account_id, account_password, account_role)"
-                + "values('"+no+"', '"+id+"', '"+pw+"', '"+role+"');";
+            //SQL문장을 정의
+            String SQL = "INSERT INTO quiz.account(account_no, account_id, account_password, account_role)"
+                    + "values('"+no+"', '"+id+"', '"+pw+"', '"+role+"');";
 
-        //쿼리 객체 생성
-        Statement stmt = connection.createStatement();
-        //ResultSet result = null;
-        stmt.executeUpdate(SQL);
+            //쿼리 객체 생성
+            Statement stmt = connection.createStatement();
+            //ResultSet result = null;
+            stmt.executeUpdate(SQL);
+        }
+        catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+
     }
 
     //회원 정보를 DB에서 삭제
