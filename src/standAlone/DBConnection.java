@@ -96,7 +96,26 @@ public class DBConnection {
         catch(SQLException sqlException){
             sqlException.printStackTrace();
         }
+    }
 
+    public void UpdateAccountInfo(int rowNum, String id, String pw, String role){
+        try{
+            //SQL문장을 정의
+            String SQL = "UPDATE quiz.account " +
+                    "SET account_id=?, account_password=?, account_role=? " +
+                    "WHERE account_no=?";
+
+            //쿼리 객체 생성
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            pstmt.setString(1, id);
+            pstmt.setString(2, pw);
+            pstmt.setString(3, role);
+            pstmt.setInt(4, rowNum+1);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }
     }
 
     //회원 정보를 DB에서 삭제
