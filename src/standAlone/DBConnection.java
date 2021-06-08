@@ -5,17 +5,12 @@ import java.sql.*;
 public class DBConnection {
     Connection connection = null;
 
-    String server = "";
-    String database = "";
-    String user_name = "";
-    String password = "";
+    String server = "localhost";
+    String database = "quiz";
+    String user_name = "root";
+    String password = "tnsdnjs2@";
 
-    public DBConnection(String server, String database, String user_name, String password){
-        this.server = server;
-        this.database = database;
-        this.user_name = user_name;
-        this.password = password;
-
+    public DBConnection(){
         LoadDriver();
         ConnectDriver();
     }
@@ -128,4 +123,111 @@ public class DBConnection {
         //ResultSet result = null;
         stmt.executeUpdate(SQL);
     }
+
+    //회원가입 정보를 DB에 저장
+    public void InsertSingleQuizInfo(String question, String answer){
+        try{
+            //SQL문장을 정의
+            String SQL = "INSERT INTO quiz.question_type1(question_text, question_answer)"
+                    + "values(?, ?);";
+
+            //쿼리 객체 생성
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            pstmt.setString(1, question);
+            pstmt.setString(2, answer);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+    }
+
+    //회원가입 정보를 DB에 저장
+    public void InsertMultiQuizInfo(String question, String num1, String num2, String num3, String num4, int answer){
+        try{
+            //SQL문장을 정의
+            String SQL = "INSERT INTO quiz.question_type1(question_text, question_num1, question_num2, question_num3, question_num4, question_answer)"
+                    + "values(?, ?, ?, ?, ?, ?);";
+
+            //쿼리 객체 생성
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            pstmt.setString(1, question);
+            pstmt.setString(2, num1);
+            pstmt.setString(3, num2);
+            pstmt.setString(4, num3);
+            pstmt.setString(5, num4);
+            pstmt.setInt(6, answer);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+    }
+
+    public void UpdateSingleQuizInfo(int rowNum, String question, String answer){
+        try{
+            //SQL문장을 정의
+            String SQL = "UPDATE quiz.question_type1 " +
+                    "SET question_text=?, question_answer=?" +
+                    "WHERE question_no=?";
+            //쿼리 객체 생성
+            PreparedStatement pstmt;
+            pstmt = connection.prepareStatement(SQL);
+            pstmt.setString(1, question);
+            pstmt.setString(2, answer);
+            pstmt.setInt(3, rowNum+1);
+
+            pstmt.executeUpdate();
+        }
+        catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+    }
+
+    public void UpdateMultiQuizInfo(int rowNum, String question, String n1, String n2, String n3, String n4, int answer){
+        try{
+            //SQL문장을 정의
+            String SQL = "UPDATE quiz.question_typ1 " +
+                    "SET question_text=?, question_num1=?, question_num2=?, question_num3=?, question_num4=?, question_answer=?" +
+                    "WHERE question_no=?";
+            //쿼리 객체 생성
+            PreparedStatement pstmt;
+            pstmt = connection.prepareStatement(SQL);
+            pstmt.setString(1, question);
+            pstmt.setString(2, n1);
+            pstmt.setString(3, n2);
+            pstmt.setString(4, n3);
+            pstmt.setString(5, n4);
+            pstmt.setInt(6, answer);
+            pstmt.setInt(7, rowNum+1);
+
+            pstmt.executeUpdate();
+        }
+        catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+    }
+
+    public void DeleteQuizInfo(int rowNum, boolean isMulti){
+        //SQL문장을 정의
+        String SQL;
+        if(isMulti){
+            SQL = "DELETE FROM quiz.question_type2 WHERE question_no=?;";
+        }else{
+            SQL = "DELETE FROM quiz.question_type1 WHERE question_no=?;";
+        }
+
+        //쿼리 객체 생성
+        try{
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            pstmt.setInt(1, rowNum);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+    }
+
+
+
 }

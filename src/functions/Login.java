@@ -19,7 +19,7 @@ public class Login {
     //DB 테이블의 계정값과 비교
     public int LoginAction(){
         //DB연결
-        DBConnection dbConnection = new DBConnection("localhost", "quiz", "root", "tnsdnjs2@");
+        DBConnection dbConnection = new DBConnection();
         String SQL = "SELECT quiz.account.account_id, quiz.account.account_password, quiz.account.account_role " +
                 "FROM quiz.account " +
                 "WHERE account_id = '" + id + "' && account_password = '" + pw + "';";
