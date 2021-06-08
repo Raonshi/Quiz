@@ -122,7 +122,6 @@ public class QuizJoin extends JFrame {
                 question_num2 = "2. " + resultSet.getString("question_num2");
                 question_num3 = "3. " + resultSet.getString("question_num3");
                 question_num4 = "4. " + resultSet.getString("question_num4");
-                
             }
             //주관식일 경우 보기란 공백
             else{

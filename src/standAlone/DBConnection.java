@@ -4,10 +4,17 @@ import java.sql.*;
 
 public class DBConnection {
     Connection connection = null;
+    //테스트용 서버
+    //String server = "localhost";
+    //String database = "quiz";
+    //String user_name = "root";
+    //String password = "tnsdnjs2@";
 
-    String server = "localhost";
+
+    //실제 접속 서버
+    String server = "52.231.66.86:3306";
     String database = "quiz";
-    String user_name = "root";
+    String user_name = "sunwonsw95";
     String password = "tnsdnjs2@";
 
     public DBConnection(){
@@ -146,7 +153,7 @@ public class DBConnection {
     public void InsertMultiQuizInfo(String question, String num1, String num2, String num3, String num4, int answer){
         try{
             //SQL문장을 정의
-            String SQL = "INSERT INTO quiz.question_type1(question_text, question_num1, question_num2, question_num3, question_num4, question_answer)"
+            String SQL = "INSERT INTO quiz.question_type2(question_text, question_num1, question_num2, question_num3, question_num4, question_answer)"
                     + "values(?, ?, ?, ?, ?, ?);";
 
             //쿼리 객체 생성
@@ -187,20 +194,18 @@ public class DBConnection {
     public void UpdateMultiQuizInfo(int rowNum, String question, String n1, String n2, String n3, String n4, int answer){
         try{
             //SQL문장을 정의
-            String SQL = "UPDATE quiz.question_typ1 " +
-                    "SET question_text=?, question_num1=?, question_num2=?, question_num3=?, question_num4=?, question_answer=?" +
+            String SQL = "UPDATE quiz.question_type2 " +
+                    "SET question_text=?, question_num1=?, question_num2=?, question_num3=?, question_num4=?, question_answer=? " +
                     "WHERE question_no=?";
             //쿼리 객체 생성
-            PreparedStatement pstmt;
-            pstmt = connection.prepareStatement(SQL);
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
             pstmt.setString(1, question);
             pstmt.setString(2, n1);
             pstmt.setString(3, n2);
             pstmt.setString(4, n3);
             pstmt.setString(5, n4);
             pstmt.setInt(6, answer);
-            pstmt.setInt(7, rowNum+1);
-
+            pstmt.setInt(7, rowNum);
             pstmt.executeUpdate();
         }
         catch(SQLException sqlException){
