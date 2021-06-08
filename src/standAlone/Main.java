@@ -155,7 +155,6 @@ class MyFrame extends JFrame{
         //회원 패널 영역
         userPanel = new JPanel();
         userPanel.setPreferredSize(new Dimension(1000, 600));
-        userPanel.setBackground(Color.PINK);
 
         scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(800, 500));
@@ -247,7 +246,6 @@ class MyFrame extends JFrame{
         //하단 패널 영역
         bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(1000, 50));
-        bottomPanel.setBackground(Color.GREEN);
 
         logLabel = new JLabel("This is Log Label");
         logLabel.setPreferredSize(new Dimension(1000, 50));
