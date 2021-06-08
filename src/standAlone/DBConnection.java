@@ -36,7 +36,7 @@ public class DBConnection {
     //로드된 드라이버를 통해 DB에 연결한다.
     void ConnectDriver(){
         try{
-            connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false", user_name, password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false&allowPublicKeyRetrieval=true", user_name, password);
             System.out.println("DB연결에 성공하였습니다.");
         }
         catch (SQLException e){
