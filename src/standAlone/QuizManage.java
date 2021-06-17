@@ -91,7 +91,6 @@ public class QuizManage extends JFrame {
         //퀴즈패널 - 주관식
         multiPanel = new JPanel();
         multiPanel.setPreferredSize(new Dimension(900, 550));
-        multiPanel.setBackground(Color.cyan);
 
         //테이블 생성
         multiTable = new JTable();

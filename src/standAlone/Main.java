@@ -155,7 +155,6 @@ class MyFrame extends JFrame{
         //회원 패널 영역
         userPanel = new JPanel();
         userPanel.setPreferredSize(new Dimension(1000, 600));
-        userPanel.setBackground(Color.PINK);
 
         scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(800, 500));

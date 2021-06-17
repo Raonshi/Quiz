@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Random;
 
 public class QuizJoin extends JFrame {
@@ -63,7 +64,7 @@ public class QuizJoin extends JFrame {
         answerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(answerText.getText().equals(question_answer)){
+                if(answerText.getText().toLowerCase().equals(question_answer.toLowerCase())){
 
                     Quest();
                     new Alert("정답입니다.");

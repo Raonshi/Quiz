@@ -15,6 +15,7 @@ public class EditUserInfo extends JFrame {
     public EditUserInfo(int rowNum, String _id, String _pw, String _role){
         setTitle("알림");
         setSize(new Dimension(400, 300));
+        setLocationRelativeTo(null);
 
         infoPanel = new JPanel();
         infoPanel.setPreferredSize(new Dimension(300, 220));
