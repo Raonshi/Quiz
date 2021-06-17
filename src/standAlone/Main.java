@@ -246,7 +246,6 @@ class MyFrame extends JFrame{
         //하단 패널 영역
         bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(1000, 50));
-        bottomPanel.setBackground(Color.GREEN);
 
         logLabel = new JLabel("This is Log Label");
         logLabel.setPreferredSize(new Dimension(1000, 50));
