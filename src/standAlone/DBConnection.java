@@ -4,17 +4,11 @@ import java.sql.*;
 
 public class DBConnection {
     Connection connection = null;
-    //테스트용 서버
-    //String server = "localhost";
-    //String database = "quiz";
-    //String user_name = "root";
-    //String password = "tnsdnjs2@";
-
 
     //실제 접속 서버
-    String server = "52.231.66.86:3306";
+    String server = "localhost:3306";
     String database = "quiz";
-    String user_name = "sunwonsw95";
+    String user_name = "root";
     String password = "tnsdnjs2@";
 
     public DBConnection(){
